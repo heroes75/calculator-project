@@ -29,55 +29,74 @@ const operate = (numberFirst, operand, numberSecond) => {
 //buttonContainer.addEventListener('click', e => display.textContent += e.target.textContent)
 //numberButtons.forEach(el => el.addEventListener('click', e => 
 //    display.textContent += e.target.textContent));
+const playOperator = (arr) => {
+    arr.forEach(el => el.addEventListener('click', e => {
+        if (numberFirst === undefined) {
+            operand = e.target.textContent;
+            numberFirst = +display.textContent;
+            console.log('num1 (oper)' + numberFirst);
+            return
+        } else if (numberFirst !== undefined && operand !== '') { 
+            /*if (numberFirst !== +display.textContent) {
+                numberSecond = +display.textContent;
+            }*/
+            numberSecond = +display.textContent;
+            console.log('num2 (oper) ' + numberSecond);
+            console.log('num1 (oper) ' + numberFirst);
+            display.textContent = operate(numberFirst, operand, numberSecond);
+            numberFirst = operate(numberFirst, operand, numberSecond);
+            operand = e.target.textContent
+            console.log('operand suite (oper) ' + operand);
+            console.log('resultat (oper): ' + numberFirst)
+        }else if (numberFirst !== undefined && operand === '') {
+            operand = e.target.textContent;
+
+        }
+
+        console.log(operand);
+        console.log(typeof numberFirst);
+    }));    
+}
 const displayOperations = () => {
     numberButtons.forEach(el => el.addEventListener('click', e => {
+        
         if (numberFirst === +display.textContent) {
             display.textContent = e.target.textContent;
         } else {
             display.textContent += e.target.textContent;
         }
-    }));
-    operator.forEach(el => el.addEventListener('click', e => {
-        if (numberFirst === undefined) {
-            operand = e.target.textContent;
-            numberFirst = +display.textContent;
-            console.log('op1 ' + numberFirst);
-        } else if (numberFirst !== undefined ) { 
-            if (numberFirst !== +display.textContent) {
-                numberSecond = +display.textContent;
-            }
-            console.log('op1 ' + numberSecond);
-            display.textContent = operate(numberFirst, operand, numberSecond);
-            operand = e.target.textContent
-            numberFirst = operate(numberFirst, operand, numberSecond);
+        if (display.textContent.length >= 10) {
+            display.textContent = display.textContent.slice(0, 11)
         }
-
-        console.log(operand);
-        console.log(typeof numberFirst);
     }));
+    playOperator(operator);
     plusOrMinus.addEventListener('click', () => { 
         if (display.textContent.includes('-')) {
             display.textContent = display.textContent.split('').toSpliced(0, 1).join('');
+            console.log(display.textContent.includes('-'));
         } else {
             display.textContent = display.textContent.split('').toSpliced(0, 0, '-').join('');
+            console.log(display.textContent.includes('-'));
         }
     });
     //console.log('regard'.split('').toSpliced(1, 1, '-'))
     ac.addEventListener('click', () => {
         display.textContent = '';
-
+        numberFirst = undefined;
+        numberSecond = undefined;
     })
     point.addEventListener('click', () => {
         if (!display.textContent.includes('.') && display.textContent !== '') display.textContent += '.'
     });
     egal.addEventListener('click', () => {
-        numberSecond === display.textContent
-        if (numberFirst !== undefined && operand !== '' && numberSecond === undefined) {
-            display.textContent = operate(numberFirst, operand, numberFirst);
-            numberFirst = operate(numberFirst, operand, numberFirst);
-        } else if (numberFirst !== undefined && operand !== '' && numberSecond !== undefined) {
+        numberSecond = +display.textContent;
+        if (numberFirst !== undefined && operand !== '' && numberSecond !== undefined) {
             display.textContent = operate(numberFirst, operand, numberSecond);
-            numberFirst = operate(numberFirst, operand, numberFirst);
+            console.log('num 1 (=): ' +  numberFirst);
+            numberFirst = operate(numberFirst, operand, numberSecond);
+            console.log('num 2 (=): ' +  numberSecond);
+            console.log('resultat (=) ' +  numberFirst);
+            operand = '';
         }
     })
 }
