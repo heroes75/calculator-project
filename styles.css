@@ -48,13 +48,32 @@ button {
     border: 0;
     flex-grow: 1;
     border-radius: 5px;
+    font-weight: 700;
+    font-size: 20px;
 }
 #id0 {
     flex-grow: 2;
 }
 #point {
     flex-grow: 0;
+    background-color: blue;
 }
 #egal {
     flex-grow: 0;
+    background-color: green;
+}
+.number {
+    background-color: yellow;
+}
+.operator {
+    background-color: orange;
+}
+#ac {
+    background-color: red;
+}
+#plus-or-minus {
+    background-color: blue;
+}
+#Supp {
+    background-color: purple;
 }

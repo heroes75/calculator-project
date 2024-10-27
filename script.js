@@ -37,20 +37,29 @@ const playOperator = (arr) => {
             numberFirst = +display.textContent;
             console.log('num1 (oper)' + numberFirst);
             return
-        } else if (numberFirst !== undefined && operand !== '') { 
-            /*if (numberFirst !== +display.textContent) {
-                numberSecond = +display.textContent;
-            }*/
+        } else if (numberFirst !== undefined && operand !== '') {
             numberSecond = +display.textContent;
+            
             console.log('num2 (oper) ' + numberSecond);
             console.log('num1 (oper) ' + numberFirst);
             let numFOperNumsec = operate(numberFirst, operand, numberSecond);
             display.textContent = tooMuch(numFOperNumsec)
             numberFirst = tooMuch(numFOperNumsec);
-            operand = e.target.textContent
+            if (operand === '/' && numberSecond === 0) {
+                display.textContent =  'LOOOOOL';
+                numberFirst = undefined;
+                numberSecond = undefined;
+                operand = '';
+                return
+            }
+            lool()
+            operand = e.target.textContent;
             console.log('operand suite (oper) ' + operand);
             console.log('resultat (oper): ' + numberFirst) 
-        }else if (numberFirst !== undefined && operand === '') {
+            console.log(operand === '/');
+            console.log(e.target.textContent);
+            
+        } else if (numberFirst !== undefined && operand === '') {
             operand = e.target.textContent;
 
         }
@@ -61,10 +70,22 @@ const playOperator = (arr) => {
 }
 const tooMuch = num => {
     if (num >= 10 ** (10 - 1) || num <= -(10 ** (10 - 1))) {
-        display.textContent = num.toExponential(3)
+        console.log(+num.toExponential(5))
+        return num.toExponential(5)
     }
-    if(num.includes('.') && !num.includes('e')) {
-        display.textContent = parseFloat(num.toFixed(3))
+    if(num.toString().includes('.') && !num.toString().includes('e')) {
+        return parseFloat(num.toFixed(3))
+    } else {
+        return num
+    }
+}
+
+
+const lool = () => {
+    if (display.textContent === 'Infinity' || display.textContent === 'NaN' || numberFirst === Infinity) {
+        numberFirst = undefined;
+        numberSecond = undefined;
+        operand = ''
     }
 }
 
@@ -73,7 +94,7 @@ const displayOperations = () => {
         //display.value = display.textContent
         //console.log(display.value)
         //display.addEventListener('change', () => isChanged = true);
-        if (numberFirst === +display.textContent) {
+        if (numberFirst == +display.textContent || display.textContent === 'Infinity' || display.textContent === 'NaN' || display.textContent ===  'LOOOOOL') {
             display.textContent = e.target.textContent;
         } else {
             display.textContent += e.target.textContent;
@@ -104,12 +125,20 @@ const displayOperations = () => {
     egal.addEventListener('click', () => {
         numberSecond = +display.textContent;
         if (numberFirst !== undefined && operand !== '' && numberSecond !== undefined) {
-            display.textContent = operate(numberFirst, operand, numberSecond);
+            
+            display.textContent = tooMuch(operate(numberFirst, operand, numberSecond));
             console.log('num 1 (=): ' +  numberFirst);
-            numberFirst = operate(numberFirst, operand, numberSecond);
+            numberFirst = tooMuch(operate(numberFirst, operand, numberSecond));
             console.log('num 2 (=): ' +  numberSecond);
             console.log('resultat (=) ' +  numberFirst);
+            if (operand === '/' && numberSecond === 0) {
+                display.textContent =  'LOOOOOL';
+                numberFirst = undefined;
+                numberSecond = undefined;
+                operand = ''
+            }
             operand = '';
+            lool();
         }
     });
     supp.addEventListener('click', () => {
@@ -122,5 +151,11 @@ const displayOperations = () => {
             display.textContent = display.textContent.slice(0, display.textContent.length - 1)
         }
     })
+    console.log('looo ' + display.textContent ===  'LOOOOOL')
+    if (display.textContent === Infinity || display.textContent === 'NaN' || display.textContent ===  'LOOOOOL'|| numberFirst === Infinity) {
+        numberFirst = undefined;
+        numberSecond = undefined;
+        operand = ''
+    }
 }
 displayOperations()
