@@ -26,22 +26,14 @@ const operate = (numberFirst, operand, numberSecond) => {
             return divide(numberFirst, numberSecond);
     }
 }
-//console.log(numberButtons);
-//buttonContainer.addEventListener('click', e => display.textContent += e.target.textContent)
-//numberButtons.forEach(el => el.addEventListener('click', e => 
-//    display.textContent += e.target.textContent));
 const playOperator = (arr) => {
     arr.forEach(el => el.addEventListener('click', e => {
         if (numberFirst === undefined) {
             operand = e.target.textContent;
             numberFirst = +display.textContent;
-            console.log('num1 (oper)' + numberFirst);
             return
         } else if (numberFirst !== undefined && operand !== '') {
             numberSecond = +display.textContent;
-            
-            console.log('num2 (oper) ' + numberSecond);
-            console.log('num1 (oper) ' + numberFirst);
             let numFOperNumsec = operate(numberFirst, operand, numberSecond);
             display.textContent = tooMuch(numFOperNumsec)
             numberFirst = tooMuch(numFOperNumsec);
@@ -54,18 +46,11 @@ const playOperator = (arr) => {
             }
             lool()
             operand = e.target.textContent;
-            console.log('operand suite (oper) ' + operand);
-            console.log('resultat (oper): ' + numberFirst) 
-            console.log(operand === '/');
-            console.log(e.target.textContent);
             
         } else if (numberFirst !== undefined && operand === '') {
             operand = e.target.textContent;
 
         }
-
-        console.log(operand);
-        console.log(typeof numberFirst);
     }));    
 }
 const tooMuch = num => {
@@ -91,9 +76,6 @@ const lool = () => {
 
 const displayOperations = () => {
     numberButtons.forEach(el => el.addEventListener('click', e => {
-        //display.value = display.textContent
-        //console.log(display.value)
-        //display.addEventListener('change', () => isChanged = true);
         if (numberFirst == +display.textContent || display.textContent === 'Infinity' || display.textContent === 'NaN' || display.textContent ===  'LOOOOOL') {
             display.textContent = e.target.textContent;
         } else {
@@ -113,7 +95,6 @@ const displayOperations = () => {
             console.log(display.textContent.includes('-'));
         }
     });
-    //console.log('regard'.split('').toSpliced(1, 1, '-'))
     ac.addEventListener('click', () => {
         display.textContent = '';
         numberFirst = undefined;
@@ -142,8 +123,6 @@ const displayOperations = () => {
         }
     });
     supp.addEventListener('click', () => {
-        console.log(numberFirst === +display.textContent);
-        console.log(display.textContent);
         if(numberFirst === +display.textContent) {
             display.textContent = '';
             numberFirst = undefined;
