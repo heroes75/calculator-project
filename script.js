@@ -6,6 +6,7 @@ const  plusOrMinus = document.querySelector('#plus-or-minus');
 const  point = document.querySelector('#point');
 const  egal = document.querySelector('#egal');
 const  ac = document.querySelector('#ac');
+const  supp = document.querySelector('#Supp');
 const add = (x, y) => x + y;
 const subtract = (x, y) => x - y;
 const multiply = (x, y) => x * y;
@@ -43,11 +44,12 @@ const playOperator = (arr) => {
             numberSecond = +display.textContent;
             console.log('num2 (oper) ' + numberSecond);
             console.log('num1 (oper) ' + numberFirst);
-            display.textContent = operate(numberFirst, operand, numberSecond);
-            numberFirst = operate(numberFirst, operand, numberSecond);
+            let numFOperNumsec = operate(numberFirst, operand, numberSecond);
+            display.textContent = tooMuch(numFOperNumsec)
+            numberFirst = tooMuch(numFOperNumsec);
             operand = e.target.textContent
             console.log('operand suite (oper) ' + operand);
-            console.log('resultat (oper): ' + numberFirst)
+            console.log('resultat (oper): ' + numberFirst) 
         }else if (numberFirst !== undefined && operand === '') {
             operand = e.target.textContent;
 
@@ -57,9 +59,20 @@ const playOperator = (arr) => {
         console.log(typeof numberFirst);
     }));    
 }
+const tooMuch = num => {
+    if (num >= 10 ** (10 - 1) || num <= -(10 ** (10 - 1))) {
+        display.textContent = num.toExponential(3)
+    }
+    if(num.includes('.') && !num.includes('e')) {
+        display.textContent = parseFloat(num.toFixed(3))
+    }
+}
+
 const displayOperations = () => {
     numberButtons.forEach(el => el.addEventListener('click', e => {
-        
+        //display.value = display.textContent
+        //console.log(display.value)
+        //display.addEventListener('change', () => isChanged = true);
         if (numberFirst === +display.textContent) {
             display.textContent = e.target.textContent;
         } else {
@@ -97,6 +110,16 @@ const displayOperations = () => {
             console.log('num 2 (=): ' +  numberSecond);
             console.log('resultat (=) ' +  numberFirst);
             operand = '';
+        }
+    });
+    supp.addEventListener('click', () => {
+        console.log(numberFirst === +display.textContent);
+        console.log(display.textContent);
+        if(numberFirst === +display.textContent) {
+            display.textContent = '';
+            numberFirst = undefined;
+        } else {
+            display.textContent = display.textContent.slice(0, display.textContent.length - 1)
         }
     })
 }
