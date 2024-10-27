@@ -55,7 +55,6 @@ const playOperator = (arr) => {
 }
 const tooMuch = num => {
     if (num >= 10 ** (10 - 1) || num <= -(10 ** (10 - 1))) {
-        console.log(+num.toExponential(5))
         return num.toExponential(5)
     }
     if(num.toString().includes('.') && !num.toString().includes('e')) {
@@ -89,10 +88,8 @@ const displayOperations = () => {
     plusOrMinus.addEventListener('click', () => { 
         if (display.textContent.includes('-')) {
             display.textContent = display.textContent.split('').toSpliced(0, 1).join('');
-            console.log(display.textContent.includes('-'));
         } else {
             display.textContent = display.textContent.split('').toSpliced(0, 0, '-').join('');
-            console.log(display.textContent.includes('-'));
         }
     });
     ac.addEventListener('click', () => {
@@ -108,10 +105,7 @@ const displayOperations = () => {
         if (numberFirst !== undefined && operand !== '' && numberSecond !== undefined) {
             
             display.textContent = tooMuch(operate(numberFirst, operand, numberSecond));
-            console.log('num 1 (=): ' +  numberFirst);
             numberFirst = tooMuch(operate(numberFirst, operand, numberSecond));
-            console.log('num 2 (=): ' +  numberSecond);
-            console.log('resultat (=) ' +  numberFirst);
             if (operand === '/' && numberSecond === 0) {
                 display.textContent =  'LOOOOOL';
                 numberFirst = undefined;
@@ -130,11 +124,5 @@ const displayOperations = () => {
             display.textContent = display.textContent.slice(0, display.textContent.length - 1)
         }
     })
-    console.log('looo ' + display.textContent ===  'LOOOOOL')
-    if (display.textContent === Infinity || display.textContent === 'NaN' || display.textContent ===  'LOOOOOL'|| numberFirst === Infinity) {
-        numberFirst = undefined;
-        numberSecond = undefined;
-        operand = ''
-    }
 }
 displayOperations()
